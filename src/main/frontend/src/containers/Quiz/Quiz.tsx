@@ -9,7 +9,7 @@ interface QuizProps {
 }
 
 interface QuizState {
-    results?: IState;
+    results?: IState[];
     isFinished?: boolean;
     activeQuestion?: number;
     answerState?: IState;
@@ -18,7 +18,7 @@ interface QuizState {
 
 class Quiz extends Component<QuizProps, QuizState> {
     state = {
-        results: {},
+        results: [] as IState[],
         isFinished: false,
         activeQuestion: 0,
         answerState: {},
@@ -48,15 +48,45 @@ class Quiz extends Component<QuizProps, QuizState> {
         ],
     };
 
-    onAnswerClickHandler = (answerId: number) => {
+    onAnswerClickHandler = (answerId: number): void => {
         console.log("clicked: " + answerId)
-        const question = this.state.quiz[this.state.activeQuestion];
-        const results: IState = this.state.results;
+        const question: IQuiz = this.state.quiz[this.state.activeQuestion];
+        const results: IState[] = this.state.results;
+
+        if (question.rightAnswerId === answerId) {
+            const state: IState = {id: answerId, value: "success"};
+            results.push({id: question.id, value: "success"});
+            this.setState({
+                answerState: state,
+                results
+            });
+            const timeout = window.setTimeout(() => {
+                if (this.isQuizFinished()) {
+                    this.setState({
+                        isFinished: true,
+                    });
+                } else {
+                    this.setState({
+                        activeQuestion: this.state.activeQuestion + 1,
+                        answerState: {id:-1},
+                    });
+                }
+                window.clearTimeout(timeout);
+            }, 1000);
+        } else {
+            const state: IState = {id: answerId, value: "error"};
+            results.push({id: question.id, value: "error"});
+            this.setState({
+                answerState: state,
+                results
+            });
+        }
+
 
     };
 
-    isQuizFinished() {
-
+    isQuizFinished(): boolean {
+        return this.state.activeQuestion + 1 === this.state.quiz.length;
     }
 
     retryHandler = () => {
@@ -76,7 +106,9 @@ class Quiz extends Component<QuizProps, QuizState> {
 
                     {this.state.isFinished ? (
                         <FinishedQuiz
-
+                            results={this.state.results}
+                            quiz={this.state.quiz}
+                            onRetry={this.retryHandler}
                         />
                     ) : (
 
