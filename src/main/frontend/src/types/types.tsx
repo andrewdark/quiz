@@ -9,3 +9,8 @@ export interface IAnswer{
     id: number;
     text: string;
 }
+
+export interface IState {
+    id?: number;
+    value?: string;
+}

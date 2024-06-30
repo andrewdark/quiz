@@ -2,22 +2,17 @@ import React, {Component} from "react";
 import classes from "./Quiz.module.scss";
 import ActiveQuiz from "../../components/ActiveQuiz/ActiveQuiz";
 import FinishedQuiz from "../../components/FinishedQuiz/FinishedQuiz";
-import {IQuiz, IAnswer} from "../../types/types";
+import {IQuiz, IState} from "../../types/types";
 
 interface QuizProps {
     children?: React.ReactChild | React.ReactNode;
 }
 
-interface IRes {
-    id?: number;
-    value?: string;
-}
-
 interface QuizState {
-    results?: IRes;
+    results?: IState;
     isFinished?: boolean;
     activeQuestion?: number;
-    answerState?: IRes;
+    answerState?: IState;
     quiz?: IQuiz[];
 }
 
@@ -54,9 +49,9 @@ class Quiz extends Component<QuizProps, QuizState> {
     };
 
     onAnswerClickHandler = (answerId: number) => {
-
+        console.log("clicked: " + answerId)
         const question = this.state.quiz[this.state.activeQuestion];
-        const results: IRes = this.state.results;
+        const results: IState = this.state.results;
 
     };
 
@@ -84,7 +79,14 @@ class Quiz extends Component<QuizProps, QuizState> {
 
                         />
                     ) : (
-                        <ActiveQuiz/>
+
+                        <ActiveQuiz
+                            answerState={this.state.answerState}
+                            quiz={this.state.quiz[this.state.activeQuestion]}
+                            onAnswerClick={this.onAnswerClickHandler}
+                            quizLength={this.state.quiz.length}
+                            answerNumber={this.state.activeQuestion + 1}
+                        />
                     )}
                 </div>
             </div>
