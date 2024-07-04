@@ -2,9 +2,9 @@ import classes from "./Button.module.scss";
 import React, {MouseEventHandler} from "react";
 
 interface ButtonProps {
-    type: string,
-    disabled: boolean,
-    onClick: MouseEventHandler<HTMLButtonElement>,
+    type?: string;
+    disabled?: boolean;
+    onClick?: MouseEventHandler<HTMLButtonElement>;
     children?: React.ReactChild | React.ReactNode;
 }
 

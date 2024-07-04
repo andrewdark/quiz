@@ -92,9 +92,9 @@ class Quiz extends Component<QuizProps, QuizState> {
     retryHandler = () => {
         this.setState({
             activeQuestion: 0,
-            answerState: null,
+            answerState: {},
             isFinished: false,
-            results: null,
+            results: [] as IState[],
         });
     };
 
