@@ -49,13 +49,21 @@ class Quiz extends Component<QuizProps, QuizState> {
     };
 
     onAnswerClickHandler = (answerId: number): void => {
-        console.log("clicked: " + answerId)
+
         const question: IQuiz = this.state.quiz[this.state.activeQuestion];
         const results: IState[] = this.state.results;
 
+        const ifSuccessPresent = results.filter(el => el.value === 'success').filter(el => el.id === question.id).length > 0;
+        const ifErrorPresent = results.filter(el => el.value === 'error').filter(el => el.id === question.id).length > 0;
+        if (ifSuccessPresent) return;
+
         if (question.rightAnswerId === answerId) {
             const state: IState = {id: answerId, value: "success"};
-            results.push({id: question.id, value: "success"});
+
+            if (!ifErrorPresent){
+                results.push({id: question.id, value: "success"});
+            }
+
             this.setState({
                 answerState: state,
                 results
@@ -68,14 +76,16 @@ class Quiz extends Component<QuizProps, QuizState> {
                 } else {
                     this.setState({
                         activeQuestion: this.state.activeQuestion + 1,
-                        answerState: {id:-1},
+                        answerState: {id: -1},
                     });
                 }
                 window.clearTimeout(timeout);
             }, 1000);
         } else {
             const state: IState = {id: answerId, value: "error"};
-            results.push({id: question.id, value: "error"});
+            if(!ifErrorPresent){
+                results.push({id: question.id, value: "error"});
+            }
             this.setState({
                 answerState: state,
                 results
