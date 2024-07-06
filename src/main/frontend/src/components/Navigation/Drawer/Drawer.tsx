@@ -1,4 +1,4 @@
-import classes from "./Drawer.module.css";
+import classes from "./Drawer.module.scss";
 
 const LINKS = ["one", "two", "three"];
 
@@ -16,7 +16,7 @@ interface DrawerProps{
     isOpen: boolean;
 }
 
-const Drawer = (props) => {
+const Drawer = (props:DrawerProps) => {
     const cls = [classes.Drawer];
     if (!props.isOpen) {
         cls.push(classes.close);
