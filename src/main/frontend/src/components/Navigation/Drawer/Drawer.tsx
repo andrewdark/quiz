@@ -1,22 +1,31 @@
 import classes from "./Drawer.module.scss";
+import {NavLink} from "react-router-dom";
 
-const LINKS = ["one", "two", "three"];
+interface DrawerProps {
+    isOpen: boolean;
+    onClose: Function;
+}
 
-function renderLink() {
+const LINKS = [{to: '/', label: 'Quiz list', exact: true},
+    {to: '/auth', label: 'Auth', exact: true},
+    {to: '/create-quiz', label: 'Create quiz', exact: true}
+];
+
+
+function renderLink(onClose: Function) {
+
     return LINKS.map((link, index) => {
         return (
             <li key={index}>
-                <a href="/">LINK {link}</a>
+                <NavLink to={link.to} onClick={() => {
+                    onClose();
+                }}>{link.label}</NavLink>
             </li>
         );
     });
 }
 
-interface DrawerProps{
-    isOpen: boolean;
-}
-
-const Drawer = (props:DrawerProps) => {
+const Drawer = (props: DrawerProps) => {
     const cls = [classes.Drawer];
     if (!props.isOpen) {
         cls.push(classes.close);
@@ -24,7 +33,7 @@ const Drawer = (props:DrawerProps) => {
     return (
         <>
             <nav className={cls.join(" ")}>
-                <ul>{renderLink()}</ul>
+                <ul>{renderLink(props.onClose)}</ul>
             </nav>
         </>
     );

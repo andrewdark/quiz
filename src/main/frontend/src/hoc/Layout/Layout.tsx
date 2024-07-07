@@ -23,7 +23,7 @@ class Layout extends Component<any, any> {
                     isOpen={this.state.menu}
                 ></MenuToggle>
                 <Backdrop onClick={this.toggleMenuHandler} isOpen={this.state.menu} />
-                <Drawer isOpen={this.state.menu} />
+                <Drawer isOpen={this.state.menu} onClose={this.toggleMenuHandler}/>
                 <main>{this.props.children}</main>
             </div>
         );
