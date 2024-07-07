@@ -2,6 +2,7 @@ import classes from "./Layout.module.scss";
 import { Component } from "react";
 import MenuToggle from "../../components/Navigation/MenuToggle/MenuToggle";
 import Drawer from "../../components/Navigation/Drawer/Drawer";
+import Backdrop from "../../UI/Backdrop/Backdrop";
 
 class Layout extends Component<any, any> {
     state = {
@@ -21,6 +22,7 @@ class Layout extends Component<any, any> {
                     onToggle={this.toggleMenuHandler}
                     isOpen={this.state.menu}
                 ></MenuToggle>
+                <Backdrop onClick={this.toggleMenuHandler} isOpen={this.state.menu} />
                 <Drawer isOpen={this.state.menu} />
                 <main>{this.props.children}</main>
             </div>
