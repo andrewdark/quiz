@@ -1,17 +1,18 @@
 import {Component} from "react";
+import classes from './Auth.module.scss';
 
-interface AuthProps{
-
-}
-
-interface AuthState{
+interface AuthProps {
 
 }
 
-class Auth extends Component<AuthProps, AuthState>{
+interface AuthState {
+
+}
+
+class Auth extends Component<AuthProps, AuthState> {
 
     render() {
-        return <div>AUTH</div>;
+        return <div className={classes.Auth}>AUTH</div>;
 
     }
 }

@@ -8,7 +8,7 @@ interface DrawerProps {
 
 const LINKS = [{to: '/', label: 'Quiz list', exact: true},
     {to: '/auth', label: 'Auth', exact: true},
-    {to: '/create-quiz', label: 'Create quiz', exact: true}
+    {to: '/quiz-creator', label: 'Create quiz', exact: true}
 ];
 
 

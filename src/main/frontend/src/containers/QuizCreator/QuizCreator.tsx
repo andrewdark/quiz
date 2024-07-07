@@ -1,17 +1,18 @@
 import {Component} from "react";
+import classes from './QuizCreator.module.scss';
 
-interface QuizCreatorProps{
-
-}
-
-interface QuizCreatorState{
+interface QuizCreatorProps {
 
 }
 
-class QuizCreator extends Component<QuizCreatorProps, QuizCreatorState>{
+interface QuizCreatorState {
+
+}
+
+class QuizCreator extends Component<QuizCreatorProps, QuizCreatorState> {
 
     render() {
-        return <div>QuizCreator</div>;
+        return <div className={classes.QuizCreator}>QuizCreator</div>;
 
     }
 }
