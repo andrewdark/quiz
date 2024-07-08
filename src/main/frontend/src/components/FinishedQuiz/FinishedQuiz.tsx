@@ -2,6 +2,7 @@ import {IQuiz, IState} from "../../types/types";
 import classes from './FinishedQuiz.module.scss';
 import Button from "../../UI/Button/Button";
 import {MouseEventHandler} from "react";
+import {Link} from 'react-router-dom';
 
 interface FinishedQuizProps {
     results: IState[];
@@ -39,7 +40,10 @@ const FinishedQuiz = (props: FinishedQuizProps) => {
             <Button onClick={props.onRetry} type="primary">
                 Повторить
             </Button>
-            <Button type="success">Перейти в список тестов</Button>
+            <Link to={'/'}>
+                <Button type="success">Перейти в список тестов</Button>
+            </Link>
+
         </div>
     </div>);
 };
