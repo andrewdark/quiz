@@ -3,9 +3,12 @@ import classes from "./Quiz.module.scss";
 import ActiveQuiz from "../../components/ActiveQuiz/ActiveQuiz";
 import FinishedQuiz from "../../components/FinishedQuiz/FinishedQuiz";
 import {IQuiz, IState} from "../../types/types";
+import {useParams} from 'react-router-dom';
 
 interface QuizProps {
     children?: React.ReactChild | React.ReactNode;
+    params?: any;
+
 }
 
 interface QuizState {
@@ -17,6 +20,7 @@ interface QuizState {
 }
 
 class Quiz extends Component<QuizProps, QuizState> {
+
     state = {
         results: [] as IState[],
         isFinished: false,
@@ -108,11 +112,16 @@ class Quiz extends Component<QuizProps, QuizState> {
         });
     };
 
+    componentDidMount() {
+        const { id } = this.props.params;
+        console.log("QUIZ ID: ", id);
+    }
+
     render() {
         return (
             <div className={classes.Quiz}>
                 <div className={classes.QuizWrapper}>
-                    <h1>Ответьте на все вопросы</h1>
+                    <h1>Ответьте на все вопросы </h1>
 
                     {this.state.isFinished ? (
                         <FinishedQuiz
@@ -136,4 +145,9 @@ class Quiz extends Component<QuizProps, QuizState> {
     }
 }
 
-export default Quiz;
+export default (props: QuizProps) => (
+    <Quiz
+        {...props}
+        params = {useParams()}
+    />
+);
