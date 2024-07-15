@@ -127,8 +127,8 @@ class Auth extends Component<AuthProps, AuthState> {
                 <h1>AUTHENTICATION</h1>
                 <form onSubmit={this.submitHandler} className={classes.AuthForm}>
                     {this.renderInputs()}
-                    <Button type="success" onClick={this.loginHandler}>Login</Button>
-                    <Button type="primary" onClick={this.regHandler}>Registration</Button>
+                    <Button type="success" onClick={this.loginHandler} disabled={!this.state.isFormValid}>Login</Button>
+                    <Button type="primary" onClick={this.regHandler} disabled={!this.state.isFormValid}>Registration</Button>
                 </form>
             </div>
         </div>;
