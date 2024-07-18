@@ -1,18 +1,18 @@
-import {Component, FormEvent} from "react";
+import {ChangeEvent, Component, FormEvent} from "react";
 import classes from './QuizCreator.module.scss';
 import Button from "../../UI/Button/Button";
 import Input from "../../UI/Input/Input";
 import {IAnswer, IInputState, IQuiz, IValidation, IValidInputState} from "../../types/types";
-import {createControl} from "../../form/FormControl";
+import {createControl, validateControl} from "../../form/FormControl";
 
 interface QuizCreatorProps {
 
 }
 
 interface QuizCreatorState {
-    quiz: IQuiz[];
-    question: IValidInputState;
-    formControls: IValidInputState[];
+    quiz?: IQuiz[];
+    question?: IValidInputState;
+    formControls?: IValidInputState[];
 }
 
 function createQuestion(): IValidInputState {
@@ -35,7 +35,7 @@ function createFormControls(): IValidInputState[] {
 
     const input1: IInputState = {
         id: 1,
-        value: 'Answer-1',
+        value: '',
         type: 'text',
         label: 'Answer 1'
     };
@@ -48,7 +48,7 @@ function createFormControls(): IValidInputState[] {
 
     const input2: IInputState = {
         id: 2,
-        value: 'Answer-2',
+        value: '',
         type: 'text',
         label: 'Answer 2'
     };
@@ -61,7 +61,7 @@ function createFormControls(): IValidInputState[] {
 
     const input3: IInputState = {
         id: 3,
-        value: 'Answer-3',
+        value: '',
         type: 'text',
         label: 'Answer 3'
     };
@@ -74,7 +74,7 @@ function createFormControls(): IValidInputState[] {
 
     const input4: IInputState = {
         id: 4,
-        value: 'Answer-4',
+        value: '',
         type: 'text',
         label: 'Answer 4'
     };
@@ -109,6 +109,18 @@ class QuizCreator extends Component<QuizCreatorProps, QuizCreatorState> {
     createQuizHandler = (): void => {
         console.log("Sent new Quiz to server ...");
     }
+    onChangeHandler = (event: ChangeEvent<HTMLInputElement>, id: number) => {
+
+        const formControls = this.state.formControls;
+        const control = formControls.find(el => el.id === id);
+        control.value = event.target.value;
+        control.touched = true;
+        control.valid = validateControl(event.target.value, control.validation);
+
+        this.setState({
+            formControls:formControls
+        });
+    }
 
     render() {
         return <div className={classes.QuizCreator}>
@@ -117,8 +129,16 @@ class QuizCreator extends Component<QuizCreatorProps, QuizCreatorState> {
                 <form onSubmit={this.submitHandler}>
                     <Input label={this.state.question.label} type={this.state.question.type}/>
                     <hr/>
-                    {this.state.formControls.map((el, index) => {
-                        return (<Input label={el.label} type={el.type}/>);
+                    {this.state.formControls.map((control, index) => {
+                        return (<Input key={control.label + index}
+                                       type={control.type}
+                                       value={control.value}
+                                       valid={control.valid}
+                                       touched={control.touched}
+                                       label={control.label}
+                                       shouldValidate={!!control.validation}
+                                       errorMessage={control.errorMessage}
+                                       onChange={event => this.onChangeHandler(event, control.id)}/>);
                     })}
                     <select></select>
                     <br/>
