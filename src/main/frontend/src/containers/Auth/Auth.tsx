@@ -2,15 +2,15 @@ import {ChangeEvent, Component, FormEvent} from "react";
 import classes from './Auth.module.scss';
 import Button from "../../UI/Button/Button";
 import Input from "../../UI/Input/Input";
-import {IInputState, IValidation} from "../../types/types";
+import {IInputState, IValidation, IValidInputState} from "../../types/types";
 
 interface AuthProps {
 
 }
 
 type FormControlsType = {
-    email: IInputState;
-    password: IInputState
+    email: IValidInputState;
+    password: IValidInputState
 };
 
 interface AuthState {
