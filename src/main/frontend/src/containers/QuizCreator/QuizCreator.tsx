@@ -4,6 +4,7 @@ import Button from "../../UI/Button/Button";
 import Input from "../../UI/Input/Input";
 import {IAnswer, IInputState, IQuiz, IValidation, IValidInputState} from "../../types/types";
 import {createControl, validateControl} from "../../form/FormControl";
+import Select from '../../UI/Select/Select';
 
 interface QuizCreatorProps {
 
@@ -140,7 +141,7 @@ class QuizCreator extends Component<QuizCreatorProps, QuizCreatorState> {
                                        errorMessage={control.errorMessage}
                                        onChange={event => this.onChangeHandler(event, control.id)}/>);
                     })}
-                    <select></select>
+                    <Select label="Select the right answer"/>
                     <br/>
                     <Button type='primary' onClick={this.addQuestionHandler}>Add question</Button>
                     <Button type='success' onClick={this.createQuizHandler}>Create Quiz</Button>
